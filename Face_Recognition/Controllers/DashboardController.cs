@@ -16,5 +16,9 @@ namespace Face_Recognition.Controllers
         {
             return View();
         }
+        public IActionResult RollCall()
+        {
+            return View();
+        }
     }
 }
