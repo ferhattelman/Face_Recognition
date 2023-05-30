@@ -1,8 +1,139 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "RollCall";
     Layout = "~/Views/Shared/Main_Layout.cshtml";
 }
+@model List<ImageStore>
 
-<h1>RollCall</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <link rel="stylesheet" href="/css/rollcall.css">
+</head>
+<body>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="height-400">
+                                <div class="container center">
+                                    <div id="video_wrapper">
+                                        <video  id="video" width="450" height="300" autoplay></video>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script language="JavaScript">
+
+        var jsonData = @Html.Raw(Json.Serialize(Model));
+
+        const video = document.getElementById("video");
+
+        Promise.all([
+            faceapi.nets.ssdMobilenetv1.loadFromUri("https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js@0.22.2/weights/"),
+            faceapi.nets.faceLandmark68Net.loadFromUri("https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js@0.22.2/weights/"),
+            faceapi.nets.faceRecognitionNet.loadFromUri("https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js@0.22.2/weights/"),
+        ]).then(startWebcam).then(faceRecognition);
+
+        function startWebcam() {
+            navigator.mediaDevices
+                .getUserMedia({
+                    "video": true,
+                    audio: false
+                })
+                .then((stream) => {
+                    video.srcObject = stream;
+                })
+                .catch((error) => {
+                    console.error(error)
+                });
+        }
+
+        function getLabel() {
+            const labels = [];
+
+            for (let i = 0; i < jsonData.length; i++) {
+                const nameSurname = jsonData[i].name_Surname;
+                labels.push(nameSurname);
+            }
+
+            return labels;
+        }
+
+        const labeledDescriptions = getLabel();
+
+        function getLabeledFaceDescriptions() {
+            return Promise.all(
+                labeledDescriptions.map(async (label) => {
+                    const descriptions = []
+                    const image = await faceapi.fetchImage(`/CameraPhotos/${label}.jpg`);
+                    const detections = await faceapi
+                        .detectSingleFace(image)
+                        .withFaceLandmarks()
+                        .withFaceDescriptor();
+
+                    descriptions.push(detections.descriptor);
+
+                    return new faceapi.LabeledFaceDescriptors(label, descriptions);
+                }));
+
+        }
+
+        async function faceRecognition() {
+            const labeledFaceDescriptors = await getLabeledFaceDescriptions();
+            const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors);
+
+            video.addEventListener('play', () => {
+                const canvas = faceapi.createCanvasFromMedia(video);
+                document.getElementById('video_wrapper').append(canvas);
+
+                const displaySize = { width: video.width, height: video.height }
+                faceapi.matchDimensions(canvas, displaySize);
+
+                setInterval(async () => {
+
+                    const detections = await faceapi
+                        .detectAllFaces(video)
+                        .withFaceLandmarks()
+                        .withFaceDescriptors();
+
+                    const resizedDetections = faceapi.resizeResults(detections, displaySize);
+
+                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+
+                    const results = resizedDetections.map((d) => {
+
+                        return faceMatcher.findBestMatch(d.descriptor);
+                    });
+
+                    results.forEach((result, i) => {
+
+                        const box = resizedDetections[i].detection.box;
+                        const drawBox = new faceapi.draw.DrawBox(box, { label: result });
+                        drawBox.draw(canvas);
+
+                    });
+
+                }, 100);
+            });
+
+        }
+
+
+    </script>
+
+
+</body>
+</html>

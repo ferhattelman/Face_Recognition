@@ -26,12 +26,12 @@ namespace Face_Recognition.Controllers
             Check check = new Check();
             if (check.Control(username, password) == true)
             {
-                //Response.Redirect("Correct");
                 return View("Dashboard", "Dashboard");
 
             }
             else
             {
+                //Hatalı uyarısı 
                 Response.Redirect("Hatali");
             }
             return View();

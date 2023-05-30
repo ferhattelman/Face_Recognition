@@ -1,3 +1,6 @@
+using Face_Recognition.EntityStore;
+using Microsoft.EntityFrameworkCore;
+
 namespace Face_Recognition
 {
     public class Program
@@ -8,6 +11,10 @@ namespace Face_Recognition
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<DatabaseContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             var app = builder.Build();
 

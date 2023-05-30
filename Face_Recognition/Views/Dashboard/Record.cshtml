@@ -11,85 +11,20 @@
     <meta name="description" content="Chameleon Admin is a modern Bootstrap 4 webapp &amp; admin dashboard html template with a large number of components, elegant design, clean and organized code.">
     <meta name="keywords" content="admin template, Chameleon admin template, dashboard template, gradient admin template, responsive admin template, webapp, eCommerce dashboard, analytic dashboard">
     <meta name="author" content="ThemeSelect">
-    <title>Charts - Chameleon Admin - Modern Bootstrap 4 WebApp & Dashboard HTML Template + UI Kit</title>
     <link rel="apple-touch-icon" href="~/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="~/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
-    <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="~/css/vendors.css">
-    <!-- END VENDOR CSS-->
-    <!-- BEGIN CHAMELEON  CSS-->
     <link rel="stylesheet" type="text/css" href="~/css/app-lite.css">
-    <!-- END CHAMELEON  CSS-->
-    <!-- BEGIN Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="~/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="~/css/core/colors/palette-gradient.css">
-    <!-- END Page Level CSS-->
-    <!-- BEGIN Custom CSS-->
-    <!-- END Custom CSS-->
-    <style>
-        .container {
-            font-size: 1.2rem;
-        }
-
-        table {
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: 2px solid black;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid black;
-            width: 50%;
-        }
-
-        label {
-            display: inline-block;
-            margin-bottom: 5px;
-            width: 40%;
-            text-align: right;
-            padding-right: 10px;
-        }
-
-        input {
-            display: inline-block;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            width: 50%;
-            box-sizing: border-box;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="~/css/record.css" />
 </head>
 <body>
     <div class="app-content content">
         <div class="content-wrapper">
-            <div class="content-wrapper-before"></div>
-            <div class="content-header row">
-                <div class="content-header-left col-md-4 col-12 mb-2">
-                    <h3 class="content-header-title">Charts</h3>
-                </div>
-                <div class="content-header-right col-md-8 col-12">
-                    <div class="breadcrumbs-top float-md-right">
-                        <div class="breadcrumb-wrapper mr-1">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item active">
-                                    Charts
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content-body">
                 <!-- Bar charts section start -->
                 <section id="chartjs-bar-charts">
                     <!-- Column Chart -->
@@ -97,64 +32,106 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Column Chart</h4>
-                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                                    <div class="heading-elements">
-                                        <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                            <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-content collapse show">
-                                    <div class="card-body">
-                                        <div class="height-400">
-                                            <div class="container center">
-                                                <table align="center">
-                                                    <tr>
-                                                        <td align="center">
-                                                            <label for="id"><b>School Number </b></label>
-                                                            <input type="text" placeholder="1234" class="text-center" id="id">
-                                                        </td>
-                                                        <td align="center">
-                                                            <label for="name"><b>Name Surname </b></label>
-                                                            <input type="text" placeholder="Harry Potter" class="text-center" id="name">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="center">
-                                                            <label for="fac"><b>Faculty </b></label>
-                                                            <input type="text" placeholder="Gryffindor" class="text-center" id="fac">
-                                                        </td>
-                                                        <td align="center">
-                                                            <label for="dep"><b>Department </b></label>
-                                                            <input type="text" placeholder="Witchcraft" class="text-center" id="dep">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2" align="center">
-                                                            <label for="less"><b>Lesson </b></label>
-                                                            <input type="text" placeholder="Defence Against the Dark Arts" class="text-center" id="less">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2" align="center">
-                                                            <button type="submit" id="submit">Submit</button>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                    <div class="card-content collapse show">
+                                        <div class="card-body">
+                                            <div class="height-400">
+                                                <div class="container center">
+                                                    <table style="position:center">
+                                                        <tr>
+                                                            <td align="center" style="position:center">
+                                                                <div id="my_camera"></div>
+                                                            </td>
+                                                            <td align="center" style="position:center">
+                                                                <div id="results"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table>
+                                                        <form id="register_form" asp-action="Record" asp-controller="Dashboard" method="post" onsubmit="event.preventDefault()">
+                                                         <td align="center">
+                                                                <label><b>School Number </b></label>
+                                                                <input type="text" placeholder="1234" class="text-center" name="id">
+                                                                <label><b>Name</b></label>
+                                                                <input type="text" placeholder="Harry" class="text-center" name="name">
+                                                                <label><b>Surname</b></label>
+                                                                <input type="text" placeholder="Potter" class="text-center" name="surname">
+                                                                <br>
+                                                                <input type="submit" onclick="take_snapshot()" value="Take Snapshot" />
+                                                                
+                                                         </td>
+                                                        </form>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
             </div>
         </div>
     </div>
+
+    <script src="~/js/webcam.min.js"></script>
+    <script language="JavaScript">
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#my_camera'); //? webcam eklemek için gerekli komut
+    </script>
+    <script language="JavaScript">
+        function dataURItoBlob(dataURI) {
+            // convert base64 to raw binary data held in a string
+            // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+            var byteString = atob(dataURI.split(',')[1]);
+
+            // separate out the mime component
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+            // write the bytes of the string to an ArrayBuffer
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+
+            return new Blob([ab], { type: mimeString });
+        }
+
+        function take_snapshot() {
+            //Fotoğraf çekim aşaması
+            Webcam.snap(function (data_uri) {
+                document.getElementById('results').innerHTML = '<img src = "' + data_uri + '" / > ';
+
+                var image_fmt = '';
+                if (data_uri.match(/^data\:image\/(\w+)/))
+                    image_fmt = RegExp.$1;
+                else
+                    throw "Cannot locate image format in Data URI";
+
+
+                var form = document.getElementById('register_form');
+                var formData = new FormData(form);
+
+                formData.append('picture', dataURItoBlob(data_uri), 'Webcam.' + image_fmt.replace(/e/, ''));
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/Dashboard/Record', true);
+                xhr.send(formData);
+
+                /*Webcam.upload(data_uri, 'Camera/Capture', function (code, text) {
+                    alert('Photo Captured'); //Controller ı işin içine dahil ediyor.
+                });*/
+            });
+            // data_uri = belgenin konumu
+            // src = görüntü adresi
+        }
+    </script>
 </body>
 </html>
