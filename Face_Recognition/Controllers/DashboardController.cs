@@ -92,5 +92,24 @@ namespace Face_Recognition.Controllers
             List<ImageStore> list = _databaseContext.ImageStores.ToList();
             return View(list);
         }
+
+        [HttpPost]
+        public IActionResult RollCall(string id)
+        {
+            int num=Convert.ToInt32(id);
+            var toDelete = _databaseContext.ImageStores.FirstOrDefault(x=> x.Id==num);
+            if(toDelete != null)
+            {
+                _databaseContext.ImageStores.Remove(toDelete);
+                _databaseContext.SaveChanges();
+
+                ViewBag.Message = "Kayıt başarıyla silindi.";
+            }
+            else
+            {
+                ViewBag.Message = "Kayıt bulunamadı veya silinemedi.";
+            }
+            return View();
+        }
     }
 }

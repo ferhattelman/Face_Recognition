@@ -9,6 +9,7 @@
 <head>
     <script src="https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js@0.22.2/dist/face-api.min.js"></script>
     <link rel="stylesheet" href="/css/rollcall.css">
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
 </head>
 <body>
 
@@ -20,10 +21,29 @@
                         <div class="card-body">
                             <div class="height-400">
                                 <div class="container center">
-                                    <div id="video_wrapper">
-                                        <video  id="video" width="450" height="300" autoplay></video>
-                                    </div>
-
+                                    <table>
+                                        <tr>
+                                            <td align="center"> 
+                                                <div id="video_wrapper">
+                                                    <video id="video" width="450" height="300" autoplay></video>
+                                                </div>
+                                            </td>
+                                            <td align="center">
+                                                @using (Html.BeginForm("RollCall", "Dashboard"))
+                                                {
+                                                    <label><b>School Number </b></label>
+                                                    <input type="text" placeholder="1234" class="text-center" name="id"> <br />
+                                                    <input type="submit" value="Log Out" />
+                                                }
+                                            </td>
+                                            @if (!string.IsNullOrEmpty(ViewBag.Message))
+                                            {
+                                                <div class="alert alert-success">@ViewBag.Message</div>
+                                            }
+                                        </tr>
+                                    </table>
+                                    
+                                    
                                 </div>
 
                             </div>
