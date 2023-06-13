@@ -1,6 +1,10 @@
 ﻿using Face_Recognition.EntityStore;
 using Face_Recognition.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Web.WebPages.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Face_Recognition.Controllers
 {
@@ -26,19 +30,27 @@ namespace Face_Recognition.Controllers
         [HttpGet]
         public IActionResult Record()
         {
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> lessons =(from i in _databaseContext.Lessons.ToList()
+                                           select new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                                           {
+                                               Text = i.Name,
+                                               Value = i.Id.ToString()
+                                           }).ToList();
+            ViewBag.Lessons = lessons;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Record(IFormCollection datas)
+        public IActionResult Record(IFormCollection datas, string Name)
         {
             int id = int.Parse(datas["id"]);
-            string name = datas["name"].ToString();
+            string names = datas["names"].ToString();
             string surname = datas["surname"].ToString();
-            string fullName = name + "_" + surname;
+            string fullName = names + "_" + surname;
             var files = HttpContext.Request.Form.Files;
 
-            if(files != null )
+
+            if (files != null )
             {
                 foreach( var file in files )
                 {
@@ -50,11 +62,20 @@ namespace Face_Recognition.Controllers
                     if (!string.IsNullOrEmpty(filePath))
                     {
                         StoreInFolder(file, filePath);
+                        ViewBag.message = "Registration Successful";
                     }
-
+                    else
+                    {
+                        ViewBag.message = "The person already exists";
+                    }
                     if (filePath != null)
                     {
                         StoreInDatabase(id, fullName, fPath);
+                        LessonName(Name,id,fullName, fPath);
+                    }
+                    else
+                    {
+                        ViewBag.message = "The person already exists";
                     }
                 }
                 return Json(true);
@@ -64,6 +85,47 @@ namespace Face_Recognition.Controllers
                 return Json(false);
             }
         }
+        public void LessonName(string Name, int id, string fullName, string filePath)
+        {
+
+            if(Name == "1")
+            {
+                LineerCebir l = new LineerCebir
+                {
+                    Id = id,
+                    Name_Surname = fullName,
+                    Image = filePath
+                };
+                _databaseContext.LineerCebirs.Add(l);
+                _databaseContext.SaveChanges();
+            }
+
+            else if (Name == "2")
+            {
+                Programlama pro= new Programlama
+                {
+                    Id = id,
+                    Name_Surname = fullName,
+                    Image = filePath
+                };
+                _databaseContext.Programlama.Add(pro);
+                _databaseContext.SaveChanges();
+            }
+
+            else if(Name == "3")
+            {
+                Iktisat i = new Iktisat
+                {
+                    Id = id,
+                    Name_Surname = fullName,
+                    Image = filePath
+                };
+                _databaseContext.Iktisat.Add(i);
+                _databaseContext.SaveChanges();
+            }
+
+        }
+        
         private void StoreInFolder(IFormFile file, string filePath)
         {
             using (FileStream fs = System.IO.File.Create(filePath))
@@ -96,10 +158,20 @@ namespace Face_Recognition.Controllers
         [HttpPost]
         public IActionResult RollCall(string id)
         {
-            int num=Convert.ToInt32(id);
-            var toDelete = _databaseContext.ImageStores.FirstOrDefault(x=> x.Id==num);
-            if(toDelete != null)
+            int num = Convert.ToInt32(id);
+            var toDelete = _databaseContext.ImageStores.FirstOrDefault(x => x.Id == num);
+
+            if (toDelete != null)
             {
+                var imagePath = Path.Combine(_environment.WebRootPath, "CameraPhotos", toDelete.Name_Surname);
+
+                // İlk olarak dosyayı sil
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+                // Daha sonra veritabanından kaydı sil
                 _databaseContext.ImageStores.Remove(toDelete);
                 _databaseContext.SaveChanges();
 
@@ -109,7 +181,9 @@ namespace Face_Recognition.Controllers
             {
                 ViewBag.Message = "Kayıt bulunamadı veya silinemedi.";
             }
+
             return View();
+
         }
     }
 }

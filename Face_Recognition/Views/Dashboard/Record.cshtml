@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Face_Recognition.Models.Lesson
+@{
     ViewData["Title"] = "Record";
     Layout = "~/Views/Shared/Main_Layout.cshtml";
 }
@@ -34,7 +35,7 @@
                                 <div class="card-header">
                                     <div class="card-content collapse show">
                                         <div class="card-body">
-                                            <div class="height-400">
+                                            <div class="height-450">
                                                 <div class="container center">
                                                     <table style="position:center">
                                                         <tr>
@@ -52,13 +53,17 @@
                                                                 <label><b>School Number </b></label>
                                                                 <input type="text" placeholder="1234" class="text-center" name="id">
                                                                 <label><b>Name</b></label>
-                                                                <input type="text" placeholder="Harry" class="text-center" name="name">
+                                                                <input type="text" placeholder="Harry" class="text-center" name="names">
                                                                 <label><b>Surname</b></label>
                                                                 <input type="text" placeholder="Potter" class="text-center" name="surname">
-                                                                <br>
-                                                                <input type="submit" onclick="take_snapshot()" value="Take Snapshot" />
+                                                                <td align="center"> 
+                                                                    <label><b>Lesson</b></label>
+                                                                    @Html.DropDownListFor(m => m.Name, (List<SelectListItem>)ViewBag.Lessons, new { @class="form-control" })
+                                                                    <input type="submit" onclick="take_snapshot()" value="Take Snapshot" />
+                                                                </td>
                                                                 
                                                          </td>
+                                                         
                                                         </form>
                                                     </table>
                                                 </div>

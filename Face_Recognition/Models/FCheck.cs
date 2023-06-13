@@ -2,24 +2,24 @@
 
 namespace Face_Recognition.Models
 {
-    public class Check
+    public class FCheck
     {
         SqlConnection connection = new SqlConnection(@"Data Source=DESKTOP-43SO5ER;Initial Catalog=FaceRecognition;TrustServerCertificate=True;Integrated Security=True");
-
-        public bool Control(string user, string pass)
+        public string Control(string email)
         {
+            string pass = string.Empty;
             connection.Open();
-            SqlCommand command = new SqlCommand("Select * From Login where Username=@p1 AND Password=@p2", connection);
-            command.Parameters.AddWithValue("@p1", user);
-            command.Parameters.AddWithValue("@p2", pass);
+            SqlCommand command = new SqlCommand("SELECT * FROM Login WHERE Email = @p1", connection);
+            command.Parameters.AddWithValue("@p1", email);
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                return true;
+                pass = reader["Password"].ToString();
+                return pass;
             }
             else
             {
-                return false;
+                return null;
             }
         }
     }

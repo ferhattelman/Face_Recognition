@@ -1,6 +1,8 @@
 ﻿using Face_Recognition.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Mail;
 
 namespace Face_Recognition.Controllers
 {
@@ -34,6 +36,52 @@ namespace Face_Recognition.Controllers
                 //Hatalı uyarısı 
                 Response.Redirect("Hatali");
             }
+            return View();
+        }
+        [HttpGet]
+        public IActionResult FPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult FPassword(IFormCollection datas)
+        {
+            string email = datas["email"].ToString();
+            FCheck check = new FCheck();
+            try
+            {
+                string godMail = "ferhattelman@outlook.com";
+                string godPass = "phL26VRydF";
+                string pass = check.Control(email);
+                if(pass !=null)
+                {
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Port = 587;
+                    smtp.Host = "smtp.outlook.com";
+                    smtp.EnableSsl = true;
+                    smtp.Credentials = new NetworkCredential(godMail, godPass);
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress(godMail, "Ferhat Telman");
+                    mail.To.Add(email);
+                    mail.Subject = "Password";
+                    mail.IsBodyHtml = true;
+                    mail.Body = pass;
+                    smtp.Send(mail);
+
+                    ViewBag.message = "Email sent successfully!";
+                }
+                else
+                {
+                    ViewBag.message = "There is a conflict in the system, please try again!";
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             return View();
         }
 
