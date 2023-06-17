@@ -24,7 +24,18 @@ namespace Face_Recognition.Controllers
        
         public IActionResult Board()
         {
-            return View();
+            var degerler=_databaseContext.Lessons.ToList();
+            return View(degerler);
+        }
+        public IActionResult Lists()
+        {
+            var model = new MyViewModel
+            {
+                ProgramlamaListesi = _databaseContext.Programlama.ToList(),
+                LineerCebirsListesi = _databaseContext.LineerCebirs.ToList(),
+                IktisatListesi = _databaseContext.Iktisat.ToList()
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -160,6 +171,8 @@ namespace Face_Recognition.Controllers
         {
             int num = Convert.ToInt32(id);
             var toDelete = _databaseContext.ImageStores.FirstOrDefault(x => x.Id == num);
+            var toDelete1 = _databaseContext.LineerCebirs.FirstOrDefault(x => x.Id == num);
+            var toDelete2 = _databaseContext.Iktisat.FirstOrDefault(x => x.Id == num);
 
             if (toDelete != null)
             {
@@ -173,6 +186,8 @@ namespace Face_Recognition.Controllers
 
                 // Daha sonra veritabanından kaydı sil
                 _databaseContext.ImageStores.Remove(toDelete);
+                _databaseContext.LineerCebirs.Remove(toDelete1);
+                _databaseContext.Iktisat.Remove(toDelete2);
                 _databaseContext.SaveChanges();
 
                 ViewBag.Message = "Kayıt başarıyla silindi.";

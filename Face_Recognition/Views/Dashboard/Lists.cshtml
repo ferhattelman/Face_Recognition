@@ -1,0 +1,82 @@
+﻿@model Face_Recognition.Models.MyViewModel
+        
+@{
+    ViewData["Title"] = "Lists";
+    Layout = "~/Views/Shared/Main_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="c:\users\ferha\source\repos\face_recognition\face_recognition\wwwroot\css\bootstrap.min.css" rel="stylesheet" />
+    <link href="c:\users\ferha\source\repos\face_recognition\face_recognition\wwwroot\css\bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <!-- Bar charts section start -->
+            <section id="chartjs-bar-charts">
+                <!-- Column Chart -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-content collapse show">
+                                    <div class="card-body">
+                                        <div class="height-600">
+                                            <div class="container center">
+                                                <h4>Programlama Listesi</h4>
+                                                <table class="table table-bordered">
+                                                    @foreach (var item in Model.ProgramlamaListesi)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Id</td>
+                                                            <td>@item.Name_Surname</td>
+                                                        </tr>
+                                                    }
+                                                </table>
+                                                <br />
+                                                <br />
+
+                                                <h4>Lineer Cebir Listesi</h4>
+                                                <table class="table table-bordered">
+                                                    @foreach (var item in Model.LineerCebirsListesi)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Id</td>
+                                                            <td>@item.Name_Surname</td>
+                                                        </tr>
+                                                    }
+                                                </table>
+                                                <br />
+                                                <br />
+
+                                                <h4>İktisat Listesi</h4>
+                                                <table class="table table-bordered">
+                                                    @foreach (var item in Model.IktisatListesi)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Id</td>
+                                                            <td>@item.Name_Surname</td>
+                                                        </tr>
+                                                    }
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+
+    
+
+</body>
+</html>

@@ -28,7 +28,7 @@ namespace Face_Recognition.Controllers
             Check check = new Check();
             if (check.Control(username, password) == true)
             {
-                return View("Dashboard", "Dashboard");
+                return View("Dashboard", "Board");
 
             }
             else
